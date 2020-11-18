@@ -1,13 +1,13 @@
 import vue from 'vue'
-import Home from '@/views/Home.vue'
-import About from '@/views/About.vue'
+import Login from '@/views/auth/Login.vue'
+import Register from '@/views/auth/Register.vue'
 import VueRouter from 'vue-router'
 
 vue.use(VueRouter);
 
 const routes = [
-  { path: '/', component: Home },
-  { path: '/about', component: About }
+  { path: '/', component: Login },
+  { path: '/register', component: Register }
 ]
 
 const route = new VueRouter({
