@@ -19,13 +19,18 @@ class RestaurantSeeder extends Seeder
                 'address' => 'Mojogedang',
                 'rating' => 10
             ],
+        );
+        
+        DB::table('restaurant')->insert(
             [
                 'name' => 'Resto Busri',
                 'address' => 'Karangpandan',
                 'rating' => 9
-            ],
+            ] 
+        );
+        DB::table('restaurant')->insert(
             [
-                'name' => 'Resto BuDi',
+                'name' => 'Resto BuD',
                 'address' => 'Karanganyar',
                 'rating' => 2
             ]

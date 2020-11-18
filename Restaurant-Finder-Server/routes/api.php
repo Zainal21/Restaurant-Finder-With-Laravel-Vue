@@ -4,7 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\{
-    AuthController
+    AuthController,
+    RestaurantController
 };
 
 /*
@@ -22,6 +23,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['middleware' => 'api'], function(){
-    Route::post('v1/login', [AuthController::class, 'login']);
+
+Route::post('/v1/login', [AuthController::class, 'login'])->name('login');
+Route::post('/v1/register', [AuthController::class, 'register'])->name('register');
+
+Route::group(['middleware' => 'jwt.verify'], function(){
+    Route::group(['prefix' => '/v1/restaurant'], function(){
+        Route::get('/', [RestaurantController::class, 'index']);
+        Route::get('/{id}', [RestaurantController::class, 'index']);
+        Route::post('/', [RestaurantController::class, 'save']);
+        Route::put('/update/{id}', [RestaurantController::class, 'save']);
+        Route::delete('/delete/{id}', [RestaurantController::class, 'destroy']);
+    });
+    Route::post('/v1/login', [AuthController::class, 'logout'])->name('logout');
 });
+
+
