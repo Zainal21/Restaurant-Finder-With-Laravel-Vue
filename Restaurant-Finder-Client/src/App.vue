@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link></router-link>
-    </div>
+    <router-link></router-link>
     <router-view></router-view>
   </div>
 </template>
@@ -17,6 +15,9 @@ export default {
 </script>
 
 <style>
+body{
+  background: #ddd ;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
