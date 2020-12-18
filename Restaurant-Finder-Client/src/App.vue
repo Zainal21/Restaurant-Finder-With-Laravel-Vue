@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <AppHeader />
     <router-link></router-link>
     <router-view></router-view>
   </div>
@@ -8,9 +9,10 @@
 <script>
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-
+import AppHeader from '@/views/components/AppHeader.vue'
 export default {
   name:'App',
+  components:{AppHeader}
 }
 </script>
 
