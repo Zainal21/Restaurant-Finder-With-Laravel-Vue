@@ -50,7 +50,7 @@
     },
     methods: {
       async onHandleSumbit() {
-        await axios.post('http://localhost:3000/restaurant', this.form, this.form = "")
+        await axios.post('http://127.0.0.1:8000/api/v1/restaurant', this.form, this.form = "")
           .then(() => {
             swal({
               title: "information!",

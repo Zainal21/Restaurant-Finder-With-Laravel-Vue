@@ -1,5 +1,7 @@
 <template>
-  <div class="container mt-5">
+  <div>
+    <!-- <AppHeader/> -->
+    <div class="container mt-5">
     <div class="row">
       <div class="col">
         <div class="card">
@@ -47,16 +49,20 @@
       </div>
     </div>
   </div>
+  </div>
 </template>
 
 <script>
   import RestaurantSearch from '@/views/components/Restaurant/RestaurantSearch.vue'
+  // import AppHeader from '@/views/components/AppHeader'
   import axios from 'axios'
   import swal from 'sweetalert'
+  
   export default {
     name: 'RestaurantList',
     components: {
-      RestaurantSearch
+      RestaurantSearch,
+      // AppHeader
     },
     data: () => {
       return {
@@ -74,8 +80,9 @@
     },
     methods: {
       async onHandleMounted() {
-        const response = await axios.get(`http://localhost:3000/restaurant`)
-        this.restuarantList = response.data
+        const response = await axios.get(`http://127.0.0.1:8000/api/v1/restaurant`)
+
+        this.restuarantList = response.data.data
       },
       async handleDeletedata(id) {
         swal({
@@ -87,7 +94,7 @@
           })
           .then(async (willDelete) => {
             if (willDelete) {
-              await axios.delete(`http://localhost:3000/restaurant/${id}`).then(() => {
+              await axios.delete(`http://127.0.0.1:8000/api/v1/restaurant/delete/${id}`).then(() => {
                 swal("Data Deleted Successfully!", {
                   icon: "success",
                 });

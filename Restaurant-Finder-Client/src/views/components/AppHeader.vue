@@ -14,8 +14,8 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/restaurant-list">Restaurant Management</router-link>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Logout</a>
+          <li class="nav-item" v-show="isLogin">
+            <a class="nav-link" href="#" @click="handleLogout()">Logout</a>
           </li>
         </ul>
       </div>
@@ -24,8 +24,30 @@
 </template>
 
 <script>
+import axios from 'axios'
   export default {
-    name: 'AppHeader'
+    name: 'AppHeader',
+    data:() => {
+      return {
+        isLogin : true,
+      }
+    },
+    mounted(){  
+      console.log(localStorage.getItem('token'))
+      if(!localStorage.getItem('token') === null){
+        this.isLogin = false
+      }
+      this.isLogin = true
+    },
+    methods:{
+     async handleLogout(){
+       const data = await axios.get('http://localhost:8000/api/v1/logout').then(() => {
+          localStorage.removeItem('token')
+          this.$router.push('/')
+        })
+        console.log(data)
+      }
+    }
   }
 </script>
 

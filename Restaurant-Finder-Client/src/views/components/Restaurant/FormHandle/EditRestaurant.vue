@@ -45,14 +45,15 @@
       }
     },
     async created(){
-      const response = await axios.get(`http://localhost:3000/restaurant/${this.$route.params.id}`)
-      this.form = response.data
+      const response = await axios.get(`http://127.0.0.1:8000/api/v1/restaurant/${this.$route.params.id}`)
+      this.form = response.data.data
+      console.log(response.data.data.rating)
     },
     methods: {
       async onHandleSumbit() {
-        await axios.put(`http://localhost:3000/restaurant/${this.$route.params.id}`, this.form, this.form = "")
+        await axios.put(`http://127.0.0.1:8000/api/v1/restaurant/update/${this.$route.params.id}`, this.form, this.form = "")
           .then(() => {
-            swal({
+            swal({  
               title: "information!",
               text: "Data Updated Successfully",
               icon: "success",
