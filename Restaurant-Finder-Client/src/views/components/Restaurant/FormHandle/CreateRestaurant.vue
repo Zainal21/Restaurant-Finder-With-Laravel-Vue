@@ -50,7 +50,13 @@
     },
     methods: {
       async onHandleSumbit() {
-        await axios.post('http://127.0.0.1:8000/api/v1/restaurant', this.form, this.form = "")
+      let data = {
+                name:this.form.name,
+                address:this.form.address,
+                rating:this.form.rating,
+              }
+        await axios.post('http://127.0.0.1:8000/api/v1/restaurant',data,
+          {headers:{"Authorization" : 'bearer' + localStorage.getItem("token")}})
           .then(() => {
             swal({
               title: "information!",
@@ -58,6 +64,8 @@
               icon: "success",
             });
             this.$router.push('/restaurant-list')
+          }).catch(errr =>{
+            console.log(errr)
           })
         
       }

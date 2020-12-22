@@ -27,17 +27,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('/v1/login', [AuthController::class, 'login'])->name('login');
 Route::post('/v1/register', [AuthController::class, 'register'])->name('register');
 Route::get('/v1/logout', [AuthController::class, 'logout'])->name('logout');
-Route::group(['prefix' => '/v1/restaurant'], function(){
-    Route::get('/', [RestaurantController::class, 'index']);
-    Route::get('/{id}', [RestaurantController::class, 'index']);
-    Route::post('/', [RestaurantController::class, 'save']);
-    Route::put('/update/{id}', [RestaurantController::class, 'save']);
-    Route::delete('/delete/{id}', [RestaurantController::class, 'destroy']);
+Route::group(['middleware' => 'jwt.verify'], function(){
+    Route::group(['prefix' => '/v1/restaurant'], function(){
+        Route::get('/', [RestaurantController::class, 'index']);
+        Route::get('/{id}', [RestaurantController::class, 'index']);
+        Route::post('/', [RestaurantController::class, 'save']);
+        Route::put('/update/{id}', [RestaurantController::class, 'save']);
+        Route::delete('/delete/{id}', [RestaurantController::class, 'destroy']);
+    });
 });
-// Route::group(['middleware' => 'jwt.verify'], function(){
-   
-//     });
 
-// });
+
 
 

@@ -9,13 +9,13 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <router-link class="nav-link active" to="/dashboard">Dashboard</router-link>
+            <router-link class="nav-link active" to="/dashboard" v-show="isLogin = true">Dashboard</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/restaurant-list">Restaurant Management</router-link>
+            <router-link class="nav-link" to="/restaurant-list" v-show="isLogin = true">Restaurant Management</router-link>
           </li>
-          <li class="nav-item" v-show="isLogin">
-            <a class="nav-link" href="#" @click="handleLogout()">Logout</a>
+          <li class="nav-item">
+            <a class="nav-link" href="#"  @click="handleLogout()">Logout</a>
           </li>
         </ul>
       </div>
@@ -29,20 +29,18 @@ import axios from 'axios'
     name: 'AppHeader',
     data:() => {
       return {
-        isLogin : true,
+        isLogin : false,
       }
     },
     mounted(){  
-      console.log(localStorage.getItem('token'))
-      if(!localStorage.getItem('token') === null){
-        this.isLogin = false
-      }
+      // console.log(localStorage.getItem('token'))
       this.isLogin = true
+      !localStorage.getItem('token') ? this.isLogin = false :  this.isLogin = true    
     },
     methods:{
      async handleLogout(){
-       const data = await axios.get('http://localhost:8000/api/v1/logout').then(() => {
-          localStorage.removeItem('token')
+       const data = await axios.get('http://localhost:8000/api/v1/logout',{headers:{"Authorization" : 'bearer' + localStorage.getItem("token")}}).then(() => {
+         localStorage.removeItem('token')
           this.$router.push('/')
         })
         console.log(data)

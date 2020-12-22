@@ -80,7 +80,13 @@
     },
     methods: {
       async onHandleMounted() {
-        const response = await axios.get(`http://127.0.0.1:8000/api/v1/restaurant`)
+        // const options = {
+        //   url:"http://127.0.0.1:8000/api/v1/restaurant",
+        //   headers:{
+        //     "Authorization" : 'bearer' + localStorage.getItem('token')
+        //   }
+        // }
+        const response = await axios.get("http://127.0.0.1:8000/api/v1/restaurant",{headers:{"Authorization" : 'bearer' + localStorage.getItem("token")}})
 
         this.restuarantList = response.data.data
       },
@@ -94,7 +100,7 @@
           })
           .then(async (willDelete) => {
             if (willDelete) {
-              await axios.delete(`http://127.0.0.1:8000/api/v1/restaurant/delete/${id}`).then(() => {
+              await axios.delete(`http://127.0.0.1:8000/api/v1/restaurant/delete/${id}`,{headers:{"Authorization" : 'bearer' + localStorage.getItem("token")}}).then(() => {
                 swal("Data Deleted Successfully!", {
                   icon: "success",
                 });
