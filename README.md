@@ -4,7 +4,7 @@ Restaurant-Finder is an Simple application about Restaurant management &amp; Fin
 
 ## Overview
 ![Main Page](Screenshoot/main.png)
-![Edit](Screenshoot/Edit.ppg)
+![Edit](Screenshoot/Edit.png)
 ![Update](Screenshoot/Delete.png)
 
 
