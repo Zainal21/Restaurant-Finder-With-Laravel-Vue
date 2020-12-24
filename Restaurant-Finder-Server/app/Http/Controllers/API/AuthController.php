@@ -13,6 +13,7 @@ class AuthController extends Controller
 {
    
 
+  
     // try {
     //     if(!$token = JWTAuth::attempt($req->only('email', 'password'))){
     //         return response()->json([
@@ -20,23 +21,23 @@ class AuthController extends Controller
     //             'error' => 'Email atau password anda salah'
     //         ], 400);
     //     }
-    // } catch (\Throwable $th) {
+    //     } catch (\Throwable $th) {
+    //         return response()->json([
+    //             'error' => 'Kesalahan tidak bisa membuat token'
+    //             ], 500);
+    //     }
     //     return response()->json([
-    //         'error' => 'Kesalahan tidak bisa membuat token'
-    //         ], 500);
-    // }
-    // return response()->json([
-    //     'success' => 'Login berhasil', 
-    //     'code' => 200,
-    //     'token' => $token
-    // ]);
+    //         'success' => 'Login berhasil', 
+    //         'code' => 200,
+    //         'token' => $token
+    //     ]);
 
     public function login()
     {
         $credentials = request(['email', 'password']);
 
         if(!$token = JWTAuth::attempt($credentials)){
-            return response()->json(['error' => 'unautorize'], 401);
+            return response()->json(['error' => 'unautorize'], 404);
         }
         return $this->responseWithToken($token);
     }

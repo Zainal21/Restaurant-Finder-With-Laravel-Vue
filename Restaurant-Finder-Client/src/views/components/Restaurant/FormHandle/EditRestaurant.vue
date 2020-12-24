@@ -10,17 +10,17 @@
             <form class="form-group" @submit.prevent="onHandleSumbit()">
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label float-left">Name</label>
-                <input type="text" class="form-control" placeholder="The Name of The Restaurant" v-model="form.name">
+                <input type="text" class="form-control" placeholder="The Name of The Restaurant" v-model="form.name" required>
               </div>
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label float-left">Address</label>
                 <input type="text" class="form-control" placeholder="The Address of The Restaurant"
-                  v-model="form.address">
+                  v-model="form.address" required>
               </div>
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label float-left">Rating</label>
                 <input type="number" min="0" max="10" class="form-control" placeholder="The Rating of The Restaurant"
-                  v-model="form.rating">
+                  v-model="form.rating" required>
               </div>
               <div class="mb-3">
                 <router-link to="/restaurant-list" class="btn btn-danger float-left mx-2">Back to Home</router-link>
@@ -44,32 +44,36 @@
         form: {}
       }
     },
-    async created(){
-      const response = await axios.get(`http://127.0.0.1:8000/api/v1/restaurant/${this.$route.params.id}`,{headers:{"Authorization" : 'bearer' + localStorage.getItem("token")}})
+    async created() {
+      const response = await axios.get(`http://127.0.0.1:8000/api/v1/restaurant/${this.$route.params.id}`, {
+        headers: {
+          "Authorization": 'bearer' + localStorage.getItem("token")
+        }
+      })
       this.form = response.data.data
       console.log(response.data.data.rating)
     },
     methods: {
       async onHandleSumbit() {
-         let data = {
-                name:this.form.name,
-                address:this.form.address,
-                rating:this.form.rating,
+        let data = {
+          name: this.form.name,
+          address: this.form.address,
+          rating: this.form.rating,
+        }
+          await axios.put(`http://127.0.0.1:8000/api/v1/restaurant/update/${this.$route.params.id}`, data, {
+              headers: {
+                "Authorization": 'bearer' + localStorage.getItem("token")
               }
-        await axios.put(`http://127.0.0.1:8000/api/v1/restaurant/update/${this.$route.params.id}`,data,{
-            headers:{
-              "Authorization" : 'bearer' + localStorage.getItem("token")
-            }
-          })
-          .then(() => {
-            this.form = ""
-            swal({  
-              title: "information!",
-              text: "Data Updated Successfully",
-              icon: "success",
-            });
-            this.$router.push('/restaurant-list')
-          })
+            })
+            .then(() => {
+              this.form = ""
+              swal({
+                title: "information!",
+                text: "Data Updated Successfully",
+                icon: "success",
+              });
+              this.$router.push('/restaurant-list')
+            })
       }
     }
   }

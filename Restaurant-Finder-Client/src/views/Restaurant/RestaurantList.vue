@@ -11,14 +11,11 @@
           <div class="card-body shadow">
             <div class="row">
               <div class="col">
-                <RestaurantSearch />
-              </div>
-              <div class="col">
-                <!-- Button trigger modal -->
-                <router-link to="/restaurant-list/create" type="button" class="btn float-right btn-primary">
+                <!-- handle seacrh text dengan membind search text dengan method searchText -->
+                <!-- <RestaurantSearch v-on:search-text="searchText" /> -->
+                <router-link to="/restaurant-list/create" type="button" class="btn float-right btn-primary mb-2">
                   Add New Restaurant
                 </router-link>
-
               </div>
             </div>
             <div class="table-responsive">
@@ -53,15 +50,14 @@
 </template>
 
 <script>
-  import RestaurantSearch from '@/views/components/Restaurant/RestaurantSearch.vue'
-  // import AppHeader from '@/views/components/AppHeader'
+  // import RestaurantSearch from '@/views/components/Restaurant/RestaurantSearch.vue'
   import axios from 'axios'
   import swal from 'sweetalert'
   
   export default {
     name: 'RestaurantList',
     components: {
-      RestaurantSearch,
+      // RestaurantSearch,
       // AppHeader
     },
     data: () => {
@@ -79,17 +75,13 @@
       this.onHandleMounted()
     },
     methods: {
+      // method fetch data 
       async onHandleMounted() {
-        // const options = {
-        //   url:"http://127.0.0.1:8000/api/v1/restaurant",
-        //   headers:{
-        //     "Authorization" : 'bearer' + localStorage.getItem('token')
-        //   }
-        // }
         const response = await axios.get("http://127.0.0.1:8000/api/v1/restaurant",{headers:{"Authorization" : 'bearer' + localStorage.getItem("token")}})
 
         this.restuarantList = response.data.data
       },
+      // method handle delete
       async handleDeletedata(id) {
         swal({
             title: "Are you sure?",
@@ -108,7 +100,16 @@
               })
             }
           })
-      }
+      },
+      // method hanlde search with pass data to components Seach
+      // async searchText(text){
+      //     try {
+      //        const response =  await axios.get(`http://localhost:8000/api/v1/restaurant?name=${text}`)
+      //        this.restuarantList = response.data.data
+      //     } catch (error) {
+      //       console.log(error)
+      //     }
+      // }
     }
   }
 </script>

@@ -17,7 +17,6 @@
                 <input type="password" class="form-control" v-model="form.password">
               </div>
               <button type="submit" class="btn btn-primary float-left mr-2">Login</button>
-              <router-link to="/register" class="btn btn-primary float-right">Register</router-link>
             </form>
           </div>
         </div>
@@ -31,6 +30,7 @@
 </style>
 
 <script>
+import swal from 'sweetalert'
 import axios from 'axios';
   export default {
     name: 'Login',
@@ -43,12 +43,26 @@ import axios from 'axios';
     methods: {
     async  handleSubmitLogin(){
         await axios.post('http://localhost:8000/api/v1/login', this.form).then(Response => {
-          const {name,email,token} = Response.data;
-          localStorage.setItem('token', token);
-          localStorage.setItem('name', name);
-          localStorage.setItem('email', email);
-          this.$router.push('/restaurant-list')
-        });
+          // console.log(Response)
+              const {name,email,token} = Response.data;
+              swal({  
+                title: "information!",
+                text: `Login Successfull`,
+                icon: "success",
+              }).then(() => {
+                localStorage.setItem('name', name);
+                localStorage.setItem('email', email);
+                localStorage.setItem('token', token);
+                this.$router.push('/restaurant-list')
+              });
+            
+           }).catch(error => {
+             swal({  
+                title: "information!",
+                text: `${error}`,
+                icon: "warning",
+              });
+           })
       }
     }
   }

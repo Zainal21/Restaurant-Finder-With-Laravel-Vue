@@ -9,13 +9,15 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <router-link class="nav-link active" to="/dashboard" v-show="isLogin = true">Dashboard</router-link>
+            <router-link class="nav-link active" to="/dashboard">Dashboard</router-link>
           </li>
+          <div>
           <li class="nav-item">
-            <router-link class="nav-link" to="/restaurant-list" v-show="isLogin = true">Restaurant Management</router-link>
+            <router-link class="nav-link" to="/restaurant-list">Restaurant Management</router-link>
           </li>
+          </div>
           <li class="nav-item">
-            <a class="nav-link" href="#"  @click="handleLogout()">Logout</a>
+            <button class="btn btn-danger text-white" @click.prevent="handleLogout()"  >Logout</button>
           </li>
         </ul>
       </div>
@@ -26,21 +28,12 @@
 <script>
 import axios from 'axios'
   export default {
-    name: 'AppHeader',
-    data:() => {
-      return {
-        isLogin : false,
-      }
-    },
-    mounted(){  
-      // console.log(localStorage.getItem('token'))
-      this.isLogin = true
-      !localStorage.getItem('token') ? this.isLogin = false :  this.isLogin = true    
-    },
+    name: 'AppHeader',    
     methods:{
      async handleLogout(){
        const data = await axios.get('http://localhost:8000/api/v1/logout',{headers:{"Authorization" : 'bearer' + localStorage.getItem("token")}}).then(() => {
          localStorage.removeItem('token')
+          this.isAuth = false
           this.$router.push('/')
         })
         console.log(data)
